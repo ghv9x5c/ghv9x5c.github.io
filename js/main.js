@@ -3,14 +3,19 @@
    Gallery, Video, Lightbox & Interactions
    ======================================== */
 
-// --- Photo list (已删除最后三张微信图片) ---
-const photoFiles = [
-  '232-gigapixel-scale-0_50x.jpg', 'P1177213.jpg', 'P1177229.jpg',
-  'P1177260.jpg', 'P1188775.jpg', 'P1188827.jpg', 'P11890117.jpg',
-  'P1189129.jpg', 'P118919.JPG', 'P1189372.JPG.jpg', 'P1213397.jpg',
-  'P1213431.jpg', 'P1213432.jpg', 'P1213482.jpg', 'P1213485.jpg',
-  'P1214078.jpg', '000046350002.jpg', '000046350029.jpg',
-  '000099310002.jpg', '000099310022.jpg'
+// --- Photo list (随机保留10张) ---
+// --- 摄影作品 ---
+var photoFiles = [
+  'P1213482.jpg',
+  'P1189372.JPG.jpg',
+  '232-gigapixel-scale-0_50x.jpg',
+  'P1177229.jpg',
+  'P1188775.jpg',
+  'P1177213.jpg',
+  '000099310001.jpg',
+  '000046350002.jpg',
+  '000099310002.jpg',
+  '微信图片_20241227004417.jpg'
 ];
 
 // --- Video list (link 留空待补充) ---
@@ -36,15 +41,11 @@ const posterFiles = [
 const albumFiles = [
   '《寨味·寨景》_画板 1.jpg',
   '《寨味·寨景》_画板 1 副本 2.jpg',
-  '《寨味·寨景》_画板 1 副本 23.jpg',
   '《寨味·寨景》_画板 1 副本 3.jpg',
-  '《寨味·寨景》_画板 1 副本 6.jpg',
   '《寨味·寨景》_画板 1 副本 7.jpg',
   '《寨这里》_画板 1 副本 2.jpg',
   '《寨这里》_画板 1 副本 3.jpg',
-  '《寨这里》_画板 1 副本 4.jpg',
   '《寨这里》_画板 1 副本 5.jpg',
-  '《寨这里》_画板 1 副本 6.jpg',
   '《寨这里》_画板 1 副本 7.jpg',
 ];
 
@@ -56,24 +57,49 @@ const certFiles = [
 
 // ==========================================
 
-// --- Build Photo Gallery (缩略图显示，原图灯箱) ---
+// --- 照片主题标签 ---
+var photoLabels = [
+  '凝望', '蓝调', '夜叙', '暖暮', '山湖',
+  '暗香', '纪实', '旷野', '天际线', '素简'
+];
+
+// --- Build Photo Gallery (瀑布流 + 原比例 + 大留白 + 标签在外 + 不规则偏移) ---
 function buildPhotoGallery() {
-  const container = document.getElementById('gallery-photo');
+  var container = document.getElementById('gallery-photo');
   if (!container) return;
-  photoFiles.forEach(f => {
-    const item = document.createElement('div');
-    item.className = 'gallery-item reveal';
-    item.dataset.fullSrc = 'assets/photos-new/' + f;
-    const img = document.createElement('img');
-    img.src = 'assets/thumbs/photos-new/' + f;
-    img.alt = 'Photography';
+  // 每张图的随机水平偏移和上方留白
+  var offsets = [-3, 4, 0, 3, -2, 1, -4, 5, -1, 2];
+  var topMargins = [0, 4, 1, 6, 2, 0, 5, 1, 3, 7];
+  var widths = [65, 60, 85, 70, 55, 75, 60, 65, 78, 50];
+  for (var i = 0; i < photoFiles.length; i++) {
+    var cell = document.createElement('div');
+    cell.className = 'photo-cell reveal';
+    cell.style.marginLeft = offsets[i] + 'rem';
+    cell.style.marginTop = topMargins[i] + 'rem';
+    cell.style.width = widths[i] + '%';
+    cell.dataset.fullSrc = 'assets/photos-new/' + photoFiles[i];
+
+    // 图外左上角标签
+    var label = document.createElement('span');
+    label.className = 'photo-label';
+    label.textContent = photoLabels[i] || '无题';
+
+    // 图片包裹
+    var wrap = document.createElement('div');
+    wrap.className = 'photo-wrap';
+    var img = document.createElement('img');
+    img.src = 'assets/thumbs/photos-new/' + photoFiles[i];
+    img.alt = photoLabels[i];
     img.loading = 'lazy';
     img.decoding = 'async';
     img.fetchPriority = 'low';
-    item.appendChild(img);
-    item.addEventListener('click', () => openLightbox(item.dataset.fullSrc));
-    container.appendChild(item);
-  });
+    wrap.appendChild(img);
+
+    cell.appendChild(label);
+    cell.appendChild(wrap);
+    cell.addEventListener('click', function() { openLightbox(this.dataset.fullSrc); });
+    container.appendChild(cell);
+  }
 }
 
 // --- Build Design Gallery (缩略图显示，原图灯箱) ---
