@@ -360,13 +360,18 @@ function setupNavScroll() {
 // ==========================================
 // --- Init ---
 document.addEventListener('DOMContentLoaded', () => {
-  // 3D 旋转画廊，不支持则回退瀑布流
-  var use3D = typeof initPhoto3D === 'function' &&
-    initPhoto3D(photoFiles, photoLabels, 'assets/thumbs/photos-new/', 'assets/photos-new/');
+  // 3D 旋转画廊 — 仅桌面端，移动端用瀑布流
+  var use3D = false;
+  var isMobile = window.matchMedia('(max-width: 768px)').matches || 'ontouchstart' in window;
+
+  if (!isMobile && typeof initPhoto3D === 'function') {
+    use3D = initPhoto3D(photoFiles, photoLabels, 'assets/thumbs/photos-new/', 'assets/photos-new/');
+  }
+
   if (!use3D) {
-    var wrap = document.getElementById('photo-3d-wrap');
-    if (wrap) {
-      wrap.innerHTML = '<div class="gallery" id="gallery-photo"></div>';
+    var wrap3d = document.getElementById('photo-3d-wrap');
+    if (wrap3d) {
+      wrap3d.innerHTML = '<div class="gallery" id="gallery-photo"></div>';
       buildPhotoGallery();
     }
   }

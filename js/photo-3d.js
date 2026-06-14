@@ -414,7 +414,7 @@
     var itemCount = Math.max(1, this.items.length);
     this.atlasSize = Math.ceil(Math.sqrt(itemCount));
     var canvas = document.createElement('canvas'), ctx = canvas.getContext('2d');
-    var cellSize = 512;
+    var cellSize = 300;
     canvas.width = this.atlasSize * cellSize; canvas.height = this.atlasSize * cellSize;
 
     var loaded = 0, total = this.items.length;
