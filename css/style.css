@@ -19,7 +19,7 @@
   --border: #e8e2d8;
   --border-dark: #3a3530;
   --radius: 6px;
-  --max-width: 1200px;
+  --max-width: 1800px;
   --gap: clamp(1rem, 3vw, 2rem);
 }
 
@@ -208,7 +208,7 @@ a { color: inherit; text-decoration: none; }
 
 /* --- 海报设计 — 原比例 + 三列 + 留白 --- */
 #gallery-poster {
-  max-width: 1000px; margin: 0 auto;
+  max-width: var(--max-width); margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 3rem;
@@ -232,7 +232,7 @@ a { color: inherit; text-decoration: none; }
 
 /* --- 摄影作品瀑布流 --- */
 #gallery-photo {
-  max-width: 1200px; margin: 0 auto; padding: 0 2rem;
+  max-width: var(--max-width); margin: 0 auto; padding: 0 2rem;
   display: block; column-count: 3; column-gap: 7rem;
 }
 #gallery-photo .photo-cell {
