@@ -91,6 +91,7 @@ a { color: inherit; text-decoration: none; }
 .hero-content {
   padding: 120px 0;
   max-width: 680px;
+  margin-left: 80px;
   text-align: left;
   color: var(--text-light);
 }
