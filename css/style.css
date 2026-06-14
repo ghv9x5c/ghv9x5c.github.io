@@ -98,7 +98,7 @@ a { color: inherit; text-decoration: none; }
 .hero-content .hero-title { color: var(--accent); }
 .hero-content .hero-desc { color: rgba(255,255,255,0.8); }
 .hero-actions {
-  position: absolute; bottom: 0; right: 0;
+  position: absolute; bottom: -60px; right: 60px;
   z-index: 2;
 }
 .hero::before {
