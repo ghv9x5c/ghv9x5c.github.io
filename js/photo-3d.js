@@ -418,26 +418,38 @@
     canvas.width = this.atlasSize * cellSize; canvas.height = this.atlasSize * cellSize;
 
     var loaded = 0, total = this.items.length;
+    var texUploaded = false;
+
+    function uploadTex() {
+      if (texUploaded) return;
+      texUploaded = true;
+      gl.bindTexture(gl.TEXTURE_2D, self.tex);
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, canvas);
+      gl.generateMipmap(gl.TEXTURE_2D);
+    }
+
     if (total === 0) {
       gl.bindTexture(gl.TEXTURE_2D, this.tex);
       gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([255,255,255,255]));
       return;
     }
+
+    // Timeout fallback: upload whatever is loaded after 5s
+    setTimeout(function() { uploadTex(); }, 5000);
+
     this.items.forEach(function(item, i) {
       var img = new Image();
-      img.crossOrigin = 'anonymous';
       img.onload = function() {
         var x = (i % self.atlasSize) * cellSize;
         var y = Math.floor(i / self.atlasSize) * cellSize;
         ctx.drawImage(img, x, y, cellSize, cellSize);
         loaded++;
-        if (loaded >= total) {
-          gl.bindTexture(gl.TEXTURE_2D, self.tex);
-          gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, canvas);
-          gl.generateMipmap(gl.TEXTURE_2D);
-        }
+        if (loaded >= total) uploadTex();
       };
-      img.onerror = function() { loaded++; };
+      img.onerror = function() {
+        loaded++;
+        if (loaded >= total) uploadTex();
+      };
       img.src = item.image;
     });
   };
@@ -574,9 +586,16 @@
 
     // WebGL2 check
     var tc = document.createElement('canvas');
-    if (!tc.getContext('webgl2')) {
+    var testGl = tc.getContext('webgl2');
+    if (!testGl) {
       wrap.innerHTML = '<div class="gallery" id="gallery-photo"></div>';
       return false;
+    }
+    // Check for common WebGL2 mobile issues
+    var debugInfo = testGl.getExtension('WEBGL_debug_renderer_info');
+    if (debugInfo) {
+      var renderer = testGl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
+      console.log('WebGL2 Renderer: ' + renderer);
     }
 
     // Build items with link pointing to full image
