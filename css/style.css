@@ -420,21 +420,74 @@ a { color: inherit; text-decoration: none; }
 
 /* --- Responsive --- */
 @media (max-width: 768px) {
-  .hero { grid-template-columns: 1fr; min-height: auto; }
-  .hero-content { padding: 120px var(--gap) 40px; text-align: center; }
-  .hero-actions { justify-content: center; }
-  .hero-content { padding: 100px var(--gap) 60px; text-align: center; }
-  .hero-description { max-width: 100%; }
-  .hero-name { font-size: 2.4rem; letter-spacing: 3px; }
+  /* Nav */
+  .nav-inner { padding: 0 1rem; height: 56px; }
+  .nav-logo { font-size: 1.2rem; letter-spacing: 2px; }
+  .nav-links { gap: 0.6rem; overflow-x: auto; }
+  .nav-links a { font-size: 0.7rem; letter-spacing: 0; white-space: nowrap; }
+
+  /* Hero */
+  .hero {
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+  .hero::after { background: rgba(0,0,0,0.6); }
+  .hero-content { padding: 100px 0 80px; text-align: left; max-width: 100%; }
+  .hero-name { font-size: 2.2rem; letter-spacing: 4px; }
+  .hero-title { font-size: 0.9rem; letter-spacing: 2px; }
+  .hero-desc { font-size: 0.82rem; line-height: 1.8; }
+  .hero-actions {
+    position: static; bottom: auto; right: auto;
+    display: flex; gap: 0.8rem; margin-top: 2rem;
+  }
+  .btn-primary, .btn-outline { padding: 12px 24px; font-size: 0.78rem; }
   .hero::before { display: none; }
-  .nav-links { gap: 0.7rem; overflow-x: auto; }
-  .nav-links a { font-size: 0.72rem; letter-spacing: 0; white-space: nowrap; }
-  .gallery { grid-template-columns: repeat(2, 1fr); }
-  #gallery-poster { grid-template-columns: repeat(2, 1fr); gap: 2rem; }
-  #gallery-photo { column-count: 2; column-gap: 2rem; padding: 0 1.5rem; }
-  #gallery-photo .photo-cell { margin-bottom: 2rem; }
-  .video-grid { grid-template-columns: 1fr; }
-  .contact-cards { grid-template-columns: 1fr; }
-  .award-item { flex-direction: column; gap: 0.25rem; }
+
+  /* Sections */
   .section { padding: 60px var(--gap); }
+  .section-header { text-align: center; margin-bottom: 2.5rem; }
+  .section-title { font-size: 1.6rem; letter-spacing: 2px; }
+
+  /* Gallery (design modules) */
+  .gallery { grid-template-columns: repeat(2, 1fr); gap: 0.6rem; }
+  .gallery-item { aspect-ratio: 4/3; }
+
+  /* Photo gallery */
+  #gallery-photo {
+    column-count: 2; column-gap: 1.5rem; padding: 0 1rem;
+  }
+  #gallery-photo .photo-cell {
+    margin-bottom: 2rem !important;
+    margin-left: 0 !important;
+    margin-top: 0 !important;
+    width: 100% !important;
+  }
+
+  /* Poster */
+  #gallery-poster { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+
+  /* Video */
+  .video-grid { grid-template-columns: 1fr; }
+
+  /* Awards */
+  .awards-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .award-item { flex-direction: column; gap: 0.25rem; }
+
+  /* Contact */
+  .contact-cards { grid-template-columns: 1fr; }
+  .contact-card { padding: 28px 20px; }
+  .contact-value { font-size: 0.9rem; }
+
+  /* Footer */
+  .footer { padding: 1.5rem; font-size: 0.7rem; }
+}
+
+/* Small phones */
+@media (max-width: 400px) {
+  .hero-name { font-size: 1.8rem; }
+  .hero-desc { font-size: 0.78rem; }
+  .hero-content { padding: 80px 0 60px; }
+  #gallery-photo { column-count: 1; }
+  #gallery-poster { grid-template-columns: 1fr; }
+  .gallery { grid-template-columns: 1fr; }
 }
