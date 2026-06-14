@@ -21,32 +21,20 @@ var photoFiles = [
 // --- Video list (link 留空待补充) ---
 // 有链接的排前面，无链接的排后面（点封面放大查看）
 const videoList = [
-  { cover: '《长沙草莓音乐节》.png',    title: '长沙草莓音乐节',          link: 'https://mp.weixin.qq.com/s/P6iRr9qp0noLcgQp2ihzXQ' },
-  { cover: '长沙大学招生宣传片-《择材环 竞未来》.png', title: '长沙大学招生宣传片-择材环 竞未来', link: 'https://weixin.qq.com/sph/ARmlZzTZEY' },
-  { cover: '湖南机电职院招生宣传片-《智汇未来信启程》.png', title: '招生宣传片-智汇未来信启程', link: 'https://www.douyin.com/user/MS4wLjABAAAAwe-gMw2irhvU8V3m0aOtQZSZA5RnTclj6RaeaOQs8Bk?from_tab_name=main&modal_id=7401832165249502516' },
-  { cover: '学生剧组-《榕树里》.png',    title: '学生剧组-榕树里',         link: 'https://weixin.qq.com/sph/AB5bRXKfph' },
-  { cover: '自制短视频-《宾得KX》.png',  title: '自制短视频-宾得KX',       link: 'https://www.bilibili.com/video/BV1UXVJzRErH/' },
-  { cover: '旅拍婚礼-MV.jpg',         title: '旅拍婚礼 MV（可线下看片）',     link: '' },
-  { cover: '广铁集团-长沙工务段视频.png', title: '广铁集团-长沙工务段视频（可线下看片）', link: '' },
-  { cover: '湖南省楚怡杯一等奖视频模板.png', title: '湖南省楚怡杯一等奖视频模板（可线下看片）', link: '' },
+  { cover: '《长沙草莓音乐节》.png',    title: '长沙草莓音乐节',          link: 'https://mp.weixin.qq.com/s/P6iRr9qp0noLcgQp2ihzXQ', desc: '' },
+  { cover: '长沙大学招生宣传片-《择材环 竞未来》.png', title: '长沙大学招生宣传片-择材环 竞未来', link: 'https://weixin.qq.com/sph/ARmlZzTZEY', desc: '' },
+  { cover: '湖南机电职院招生宣传片-《智汇未来信启程》.png', title: '招生宣传片-智汇未来信启程', link: 'https://www.douyin.com/user/MS4wLjABAAAAwe-gMw2irhvU8V3m0aOtQZSZA5RnTclj6RaeaOQs8Bk?from_tab_name=main&modal_id=7401832165249502516', desc: '' },
+  { cover: '学生剧组-《榕树里》.png',    title: '学生剧组-榕树里',         link: 'https://weixin.qq.com/sph/AB5bRXKfph', desc: '' },
+  { cover: '自制短视频-《宾得KX》.png',  title: '自制短视频-宾得KX',       link: 'https://www.bilibili.com/video/BV1UXVJzRErH/', desc: '' },
+  { cover: '旅拍婚礼-MV.jpg',         title: '旅拍婚礼 MV（可线下看片）',     link: '', desc: '' },
+  { cover: '广铁集团-长沙工务段视频.png', title: '广铁集团-长沙工务段视频（可线下看片）', link: '', desc: '' },
+  { cover: '湖南省楚怡杯一等奖视频模板.png', title: '湖南省楚怡杯一等奖视频模板（可线下看片）', link: '', desc: '' },
 ];
 
 // --- Poster design ---
 const posterFiles = [
   '画板 1.jpg', '画板 2.jpg', '画板 3.jpg',
   '室内打卡.jpg', '室外摄影展.jpg'
-];
-
-// --- Album design ---
-const albumFiles = [
-  '《寨味·寨景》_画板 1.jpg',
-  '《寨味·寨景》_画板 1 副本 2.jpg',
-  '《寨味·寨景》_画板 1 副本 3.jpg',
-  '《寨味·寨景》_画板 1 副本 7.jpg',
-  '《寨这里》_画板 1 副本 2.jpg',
-  '《寨这里》_画板 1 副本 3.jpg',
-  '《寨这里》_画板 1 副本 5.jpg',
-  '《寨这里》_画板 1 副本 7.jpg',
 ];
 
 // --- Certificates ---
@@ -155,18 +143,38 @@ function buildVideoGrid() {
     card.appendChild(wrap);
     card.appendChild(title);
 
-    // 有链接的视频加跳转标记
+    // 标签行
+    var tagsWrap = document.createElement('div');
+    tagsWrap.className = 'video-tags';
+
     if (v.link) {
-      const tag = document.createElement('span');
+      var tag = document.createElement('span');
       tag.className = 'video-link-tag';
       tag.textContent = '点击观看';
-      card.appendChild(tag);
+      tag.addEventListener('click', function(e) {
+        e.stopPropagation();
+        window.open(v.link, '_blank');
+      });
+      tagsWrap.appendChild(tag);
     }
 
-    card.addEventListener('click', () => {
-      if (v.link) {
-        window.open(v.link, '_blank');
+    var descBtn = document.createElement('span');
+    descBtn.className = 'video-desc-btn';
+    descBtn.textContent = '简介';
+    descBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      if (v.desc) {
+        alert(v.desc);
       } else {
+        alert('暂无简介');
+      }
+    });
+    tagsWrap.appendChild(descBtn);
+    card.appendChild(tagsWrap);
+
+    card.addEventListener('click', function(e) {
+      if (e.target.classList.contains('video-desc-btn') || e.target.classList.contains('video-link-tag')) return;
+      if (!v.link) {
         openLightbox(card.dataset.fullSrc);
       }
     });
@@ -358,7 +366,6 @@ document.addEventListener('DOMContentLoaded', () => {
   buildPhotoGallery();
   buildVideoGrid();
   buildDesignGallery('gallery-poster', posterFiles, 'assets/design-poster/', 'assets/thumbs/design-poster/');
-  buildDesignGallery('gallery-album', albumFiles, 'assets/design-album/', 'assets/thumbs/design-album/');
   buildCertGallery();
   setupResume();
   setupScrollReveal();
