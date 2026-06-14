@@ -6,16 +6,14 @@
 // --- Photo list (随机保留10张) ---
 // --- 摄影作品 ---
 var photoFiles = [
-  'P1213482.jpg',
-  'P1189372.JPG.jpg',
-  '232-gigapixel-scale-0_50x.jpg',
-  'P1177229.jpg',
-  'P1188775.jpg',
-  'P1177213.jpg',
-  '000099310001.jpg',
-  '000046350002.jpg',
-  '000099310002.jpg',
-  '微信图片_20241227004417.jpg'
+  '000046350002.jpg', '000046350029.jpg', '000099310001.jpg',
+  '000099310002.jpg', '000099310022.jpg', '232-gigapixel-scale-0_50x.jpg',
+  'P1177213.jpg', 'P1177229.jpg', 'P1177260.jpg',
+  'P1188775.jpg', 'P1188827.jpg', 'P11890117.jpg',
+  'P1189129.jpg', 'P118919.jpg', 'P1189372.JPG.jpg',
+  'P1213397.jpg', 'P1213431.jpg', 'P1213432.jpg',
+  'P1213482.jpg', 'P1213485.jpg', 'P1214078.jpg',
+  '微信图片_20241227004322.jpg', '微信图片_20241227004417.jpg', '微信图片_20241227004419.jpg'
 ];
 
 // --- Video list (link 留空待补充) ---
@@ -47,8 +45,7 @@ const certFiles = [
 
 // --- 照片主题标签 ---
 var photoLabels = [
-  '凝望', '蓝调', '夜叙', '暖暮', '山湖',
-  '暗香', '纪实', '旷野', '天际线', '素简'
+  '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''
 ];
 
 // --- Build Photo Gallery (瀑布流 + 原比例 + 大留白 + 标签在外 + 不规则偏移) ---
@@ -363,9 +360,22 @@ function setupNavScroll() {
 // ==========================================
 // --- Init ---
 document.addEventListener('DOMContentLoaded', () => {
-  buildPhotoGallery();
+  // 3D 旋转画廊，不支持则回退瀑布流
+  var use3D = typeof initPhoto3D === 'function' &&
+    initPhoto3D(photoFiles, photoLabels, 'assets/thumbs/photos-new/', 'assets/photos-new/');
+  if (!use3D) {
+    var wrap = document.getElementById('photo-3d-wrap');
+    if (wrap) {
+      wrap.innerHTML = '<div class="gallery" id="gallery-photo"></div>';
+      buildPhotoGallery();
+    }
+  }
   buildVideoGrid();
-  buildDesignGallery('gallery-poster', posterFiles, 'assets/design-poster/', 'assets/thumbs/design-poster/');
+
+  if (typeof initPosterCarousel === 'function') {
+    initPosterCarousel('poster-carousel', posterFiles, 'assets/thumbs/design-poster/', 'assets/design-poster/');
+  }
+
   buildCertGallery();
   setupResume();
   setupScrollReveal();

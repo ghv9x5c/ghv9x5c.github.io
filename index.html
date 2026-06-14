@@ -27,7 +27,7 @@
   <section id="hero" class="hero">
     <div class="hero-inner">
     <div class="hero-content">
-      <h1 class="hero-name">蒙旭威个人作品集</h1>
+      <h1 class="hero-name">蒙旭威作品集</h1>
       <p class="hero-title">视频拍摄 / 后期剪辑</p>
       <div class="hero-actions">
         <a href="#photo" class="btn-primary">查看作品</a>
@@ -44,7 +44,9 @@
       <h2 class="section-title">摄影作品</h2>
       <p class="section-sub">点击图片可放大查看</p>
     </div>
-    <div class="gallery" id="gallery-photo"></div>
+    <div class="photo-3d-wrap" id="photo-3d-wrap">
+      <canvas id="photo-3d-canvas"></canvas>
+    </div>
   </section>
 
   <!-- Video -->
@@ -64,11 +66,7 @@
       <h2 class="section-title">平面设计</h2>
     </div>
 
-    <!-- Poster Design -->
-    <div class="work-category">
-      <h3 class="category-title">海报设计</h3>
-      <div class="gallery gallery-small" id="gallery-poster"></div>
-    </div>
+    <div class="poster-carousel" id="poster-carousel"></div>
 
   </section>
 
@@ -172,6 +170,10 @@
     <p>&copy; 2026 蒙旭威. All rights reserved.</p>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/gl-matrix@3.4.3/gl-matrix-min.js"></script>
+  <script src="js/photo-3d.js"></script>
+  <script src="js/circular-gallery.js"></script>
+  <script src="js/border-glow.js"></script>
   <script src="js/main.js?v=2"></script>
 </body>
 </html>
