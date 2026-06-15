@@ -4,15 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>蒙旭威 — 视频拍摄 / 剪辑</title>
-  <link rel="stylesheet" href="css/style.css?v=3">
+  <link rel="stylesheet" href="css/style.css?v=8">
 </head>
 <body>
 
   <!-- Navigation -->
-  <nav class="nav">
+  <nav class="nav" id="nav">
+    <div class="nav-progress" id="nav-progress"></div>
     <div class="nav-inner">
       <a href="#hero" class="nav-logo">MXW</a>
       <div class="nav-links">
+        <a href="#about">关于</a>
         <a href="#photo">摄影</a>
         <a href="#video">视频</a>
         <a href="#design">设计</a>
@@ -27,7 +29,7 @@
   <section id="hero" class="hero">
     <div class="hero-inner">
     <div class="hero-content">
-      <h1 class="hero-name">蒙旭威作品集</h1>
+      <h1 class="hero-name split-text shiny-text">蒙旭威作品集</h1>
       <p class="hero-title">视频拍摄 / 后期剪辑</p>
       <div class="hero-actions">
         <a href="#photo" class="btn-primary">查看作品</a>
@@ -37,12 +39,44 @@
     </div>
   </section>
 
+  <!-- About Me -->
+  <section id="about" class="section about-section">
+    <div class="about-grid">
+      <div class="about-img-wrap reveal">
+        <div class="about-gold-bar"></div>
+        <div class="about-img">
+          <img src="assets/about/个人照片.jpg" alt="蒙旭威" class="about-photo">
+        </div>
+        <div class="about-img-frame"></div>
+      </div>
+      <div class="about-text">
+        <div class="section-tag reveal">About</div>
+        <h2 class="section-title reveal">以影像<br><span class="about-accent">感知世界</span></h2>
+        <p class="about-intro reveal">
+          你好，我是蒙旭威，一名专注于视频拍摄与后期剪辑的自由创作者。多年来，我用镜头记录生活的温度，用剪辑讲述品牌的故事。
+        </p>
+        <blockquote class="about-quote reveal">
+          "每一帧都是一次对话，每一张照片都是一个故事的起点。"
+        </blockquote>
+        <p class="about-desc reveal">
+          从最初拿起相机的那一刻起，我便深深迷恋于光影的魔力。无论是商业项目还是个人创作，我都追求极致的视觉表达——让每一个画面都经得起时间的审视。
+        </p>
+        <div class="about-tags reveal">
+          <span class="about-tag">视频拍摄</span>
+          <span class="about-tag">后期剪辑</span>
+          <span class="about-tag">平面设计</span>
+        </div>
+        <a href="#photo" class="btn-primary reveal" style="display:inline-block;margin-top:1.5rem;">查看作品 →</a>
+      </div>
+    </div>
+  </section>
+
   <!-- Photography -->
   <section id="photo" class="section">
     <div class="section-header">
       <span class="section-tag">Photography</span>
-      <h2 class="section-title">摄影作品</h2>
-      <p class="section-sub">点击图片可放大查看</p>
+      <h2 class="section-title split-text">摄影作品</h2>
+      <p class="section-sub">拖动查看更多 · 点击可放大查看</p>
     </div>
     <div class="photo-3d-wrap" id="photo-3d-wrap">
       <canvas id="photo-3d-canvas"></canvas>
@@ -53,8 +87,8 @@
   <section id="video" class="section section-dark">
     <div class="section-header">
       <span class="section-tag">Video</span>
-      <h2 class="section-title">视频作品</h2>
-      <p class="section-sub">点击封面跳转观看完整视频</p>
+      <h2 class="section-title split-text">视频作品</h2>
+      <p class="section-sub">点击观看即可跳转观看完整视频</p>
     </div>
     <div class="video-grid" id="video-grid"></div>
   </section>
@@ -63,7 +97,8 @@
   <section id="design" class="section">
     <div class="section-header">
       <span class="section-tag">Design</span>
-      <h2 class="section-title">平面设计</h2>
+      <h2 class="section-title split-text">平面设计</h2>
+      <p class="section-sub">点击图片可放大查看</p>
     </div>
 
     <div class="poster-carousel" id="poster-carousel"></div>
@@ -74,7 +109,8 @@
   <section id="awards" class="section section-dark">
     <div class="section-header">
       <span class="section-tag">Honors</span>
-      <h2 class="section-title">荣誉与奖项</h2>
+      <h2 class="section-title split-text">荣誉与奖项</h2>
+      <p class="section-sub">点击图片可放大查看</p>
     </div>
     <div class="awards-grid">
       <div class="awards-list">
@@ -132,7 +168,7 @@
   <section id="resume" class="section">
     <div class="section-header">
       <span class="section-tag">Resume</span>
-      <h2 class="section-title">个人简历</h2>
+      <h2 class="section-title split-text">个人简历</h2>
       <p class="section-sub">点击图片可放大查看</p>
     </div>
     <div class="resume-wrap">
@@ -144,7 +180,7 @@
   <section id="contact" class="section section-dark">
     <div class="section-header">
       <span class="section-tag">Contact</span>
-      <h2 class="section-title">联系我</h2>
+      <h2 class="section-title split-text">联系我</h2>
     </div>
     <div class="contact-content">
       <p class="contact-intro">如果你有视频拍摄、剪辑或设计需求，欢迎联系。</p>
@@ -170,10 +206,12 @@
     <p>&copy; 2026 蒙旭威. All rights reserved.</p>
   </footer>
 
+  <script src="js/antigravity.js?v=2"></script>
   <script src="https://cdn.jsdelivr.net/npm/gl-matrix@3.4.3/gl-matrix-min.js"></script>
-  <script src="js/photo-3d.js?v=2"></script>
+  <script src="js/split-text.js?v=2"></script>
+  <script src="js/photo-3d.js?v=10"></script>
   <script src="js/circular-gallery.js?v=2"></script>
   <script src="js/border-glow.js?v=2"></script>
-  <script src="js/main.js?v=3"></script>
+  <script src="js/main.js?v=5"></script>
 </body>
 </html>
