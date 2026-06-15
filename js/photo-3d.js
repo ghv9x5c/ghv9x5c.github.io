@@ -480,8 +480,15 @@
     this._time = time;
     this._deltaFrames = this._deltaTime / this.TARGET_FRAME_DURATION;
     this._frames += this._deltaFrames;
-    this._animate(this._deltaTime);
-    this._render();
+
+    // 不可见时跳过渲染，释放 GPU 给视频
+    var rect = this.canvas.getBoundingClientRect();
+    var visible = rect.bottom > 0 && rect.top < window.innerHeight;
+    if (visible) {
+      this._animate(this._deltaTime);
+      this._render();
+    }
+
     var self = this;
     requestAnimationFrame(function(t) { self.run(t); });
   };
