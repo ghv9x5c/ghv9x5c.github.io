@@ -7,15 +7,30 @@
     if (el.getAttribute('data-split-done')) return;
     el.setAttribute('data-split-done', '1');
 
-    var text = el.textContent;
-    el.textContent = '';
-    for (var i = 0; i < text.length; i++) {
-      var span = document.createElement('span');
-      span.className = 'char';
-      span.style.setProperty('--i', i);
-      span.textContent = text[i] === ' ' ? ' ' : text[i];
-      el.appendChild(span);
+    var charIndex = 0;
+    function processNode(node) {
+      if (node.nodeType === 3) {
+        // 文本节点 → 拆分为字符 span
+        var text = node.textContent;
+        var frag = document.createDocumentFragment();
+        for (var i = 0; i < text.length; i++) {
+          var span = document.createElement('span');
+          span.className = 'char';
+          span.style.setProperty('--i', charIndex);
+          span.textContent = text[i] === ' ' ? ' ' : text[i];
+          frag.appendChild(span);
+          charIndex++;
+        }
+        if (node.parentNode) node.parentNode.replaceChild(frag, node);
+      } else if (node.nodeType === 1) {
+        // 元素节点 → 递归处理子节点
+        var children = Array.prototype.slice.call(node.childNodes);
+        for (var j = 0; j < children.length; j++) {
+          processNode(children[j]);
+        }
+      }
     }
+    processNode(el);
   }
 
   function revealWhenVisible(el, delay) {
@@ -51,30 +66,9 @@
     }
   }
 
-  // --- Shiny Text 鼠标跟随 ---
-  function setupShiny() {
-    var el = document.querySelector('.shiny-text');
-    if (!el) return;
-    el.addEventListener('mousemove', function(e) {
-      var rect = el.getBoundingClientRect();
-      var pct = ((e.clientX - rect.left) / rect.width) * 100;
-      var chars = el.querySelectorAll('.char');
-      for (var i = 0; i < chars.length; i++) {
-        chars[i].style.backgroundPosition = pct + '% center';
-      }
-    });
-    el.addEventListener('mouseleave', function() {
-      var chars = el.querySelectorAll('.char');
-      for (var i = 0; i < chars.length; i++) {
-        chars[i].style.backgroundPosition = '150% center';
-      }
-    });
-  }
-
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function() { init(); setupShiny(); });
+    document.addEventListener('DOMContentLoaded', init);
   } else {
     init();
-    setupShiny();
   }
 })();

@@ -85,9 +85,22 @@ a { color: inherit; text-decoration: none; }
   min-height: 100vh;
   display: flex; align-items: center;
   background: var(--bg);
-  position: relative;
+  overflow: hidden;
 }
-/* Antigravity canvas — full hero background */
+/* 背景视频 */
+.hero-video {
+  position: absolute; inset: 0; z-index: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+/* 视频暗色遮罩 */
+.hero::before {
+  content: '';
+  position: absolute; inset: 0; z-index: 0;
+  background: rgba(5, 5, 11, 0.55);
+  pointer-events: none;
+}
+/* 粒子 canvas（保留兼容） */
 .antigravity-canvas {
   position: absolute !important;
   inset: 0; z-index: 1;
@@ -506,6 +519,20 @@ a { color: inherit; text-decoration: none; }
   -webkit-text-fill-color: transparent;
   background-position: 150% center;
   transition: background-position 0.1s ease-out;
+}
+
+/* --- Shiny Text 自动扫光 --- */
+.shiny-text .char {
+  background-image: linear-gradient(110deg, #a78bfa 0%, #d4c4f7 35%, #ffffff 50%, #d4c4f7 65%, #a78bfa 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine-sweep 4s ease-in-out infinite;
+}
+@keyframes shine-sweep {
+  0% { background-position: 150% center; }
+  100% { background-position: -50% center; }
 }
 
 /* --- Split Text Animation --- */

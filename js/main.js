@@ -371,26 +371,7 @@ function setupNavScroll() {
 // ==========================================
 // --- Init ---
 document.addEventListener('DOMContentLoaded', () => {
-  // 反重力粒子效果
-  if (typeof initAntigravity === 'function') {
-    initAntigravity('#hero', {
-      count: 300,
-      magnetRadius: 10,
-      ringRadius: 10,
-      waveSpeed: 0.4,
-      waveAmplitude: 1,
-      particleSize: 2,
-      lerpSpeed: 0.1,
-      color: '#FF9FFC',
-      autoAnimate: false,
-      particleVariance: 1,
-      rotationSpeed: 0,
-      depthFactor: 1,
-      pulseSpeed: 3,
-      particleShape: 'capsule',
-      fieldStrength: 10
-    });
-  }
+  // 背景视频（无需 JS 初始化）
 
   // 3D 旋转画廊
   var use3D = typeof initPhoto3D === 'function' &&
